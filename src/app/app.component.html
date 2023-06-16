@@ -1,0 +1,49 @@
+<mat-toolbar color="primary">
+  <span>Todo App</span>
+  <span class="example-spacer"></span>
+  
+</mat-toolbar>
+<div class="main-body">
+   
+    
+  <div class="table-container">
+    <p-table [value]="dataSource.data" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,20]">
+      <ng-template pTemplate="header">
+          <tr>
+              <th>To do tasks</th>
+              <th>What time is it? </th>
+              <th> Edit or Delete actions</th>
+              <th>
+                  <button class="add-task-button" pButton type="button" (click)="openAddEditTodoForm()" label="Add Task" icon="pi pi-plus"></button>
+              </th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-row>
+          <tr>
+              <td>{{row.todo}}</td>
+              <td>{{row.whattimeisit}}</td>
+              <select (change)="onDropdownChange($event)">
+                <option value="action" disabled selected>Select action</option>
+                <option *ngFor="let option of dropdownOptions" [value]="option.value">{{ option.label }}</option>     
+                        <ng-template let-option pTemplate="selectedItem">
+                  <div class="dropdown-selected-item">
+                    {{ option.label }}
+                    <li class="edit" label="edit" (click)="openEditTodoForm(row)"></li>
+                    <li class="delete" label="delete" (click)="deleteTask(row.id)"></li>
+                  </div>
+                </ng-template>
+              </select>
+            
+          </tr>
+      </ng-template>
+     
+  </p-table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+
+  </div>
+</div>
+
+<ng-confirm></ng-confirm>
+
+
+
